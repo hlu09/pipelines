@@ -412,6 +412,9 @@ class Compiler(object):
     """
     template = {'name': group.name}
 
+    if group.parallelism:
+      template['parallelism'] = group.parallelism
+
     # Generate inputs section.
     if inputs.get(group.name, None):
       template_inputs = [{'name': x[0]} for x in inputs[group.name]]
@@ -693,7 +696,7 @@ class Compiler(object):
     if exit_handler:
       workflow['spec']['onExit'] = exit_handler.name
 
-    # This can be overwritten by the task specific 
+    # This can be overwritten by the task specific
     # nodeselection, specified in the template.
     if pipeline_conf.default_pod_node_selector:
       workflow['spec']['nodeSelector'] = pipeline_conf.default_pod_node_selector

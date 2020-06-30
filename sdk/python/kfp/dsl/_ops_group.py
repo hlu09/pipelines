@@ -44,6 +44,7 @@ class OpsGroup(object):
     self.recursive_ref = None
 
     self.loop_args = None
+    self.parallelism = None
 
 
   @staticmethod
@@ -200,3 +201,20 @@ class ParallelFor(OpsGroup):
   def __enter__(self) -> _for_loop.LoopArguments:
     _ = super().__enter__()
     return self.loop_args
+
+
+class Parallelism(OpsGroup):
+  """Set max parallel executions of child tasks in the with block.
+
+  Example usage:
+  ```python
+  with dsl.Parallelism(2):
+  ```
+  """
+  TYPE_NAME = 'parallel_limit'
+
+  def __init__(self, parallelism: int = None):
+    super().__init__(self.TYPE_NAME)
+    if parallelism:
+      assert parallelism > 0
+      self.parallelism = parallelism
