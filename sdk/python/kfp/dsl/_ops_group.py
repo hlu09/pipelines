@@ -213,8 +213,7 @@ class Parallelism(OpsGroup):
   """
   TYPE_NAME = 'parallel_limit'
 
-  def __init__(self, parallelism: int = None):
+  def __init__(self, parallelism: int):
     super().__init__(self.TYPE_NAME)
-    if parallelism:
-      assert parallelism > 0
-      self.parallelism = parallelism
+    assert parallelism > 0
+    self.parallelism = parallelism
